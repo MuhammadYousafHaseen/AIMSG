@@ -15,42 +15,59 @@ interface VerificationEmailProps {
     otp: string;
 }
 
-export default function VerificationEmail({ username, otp}: VerificationEmailProps) {
+export default function VerificationEmail({  username,otp }: VerificationEmailProps) {
     return(
         <Html lang="en" dir="ltr">
-            <Head>
-                <title>Verification Email</title>
-                <Font 
-                fontFamily="Inter"
-                fontWeight="400"
-                fontStyle="normal"
-                fontUrl="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
-                />
-            </Head>
-            <Preview>Here&apos;s your verificatio code: {otp}</Preview>
-            <Section>
-                <Row>
-                    <Text>
-                        Thanks for registering. Please use the following code to verify your account.
-                    </Text>
-                </Row>
-                <Row>
-                    <Text>{otp}</Text>
-
-                </Row>
-                <Row>
-                    <Text>
-                        If you didn&apos;t sign up for this account you can safely ignore this email.
-                    </Text>
-                </Row>
-                {/* <Row>
-                    <Button href={`http://localhost:3000/verify/${username}`}
-                    style={{color: "#fff", backgroundColor: "#4F46E5", borderRadius: "5px", padding: "10px 20px", textDecoration: "none"}}
-                    >
-                        Verify Here
-                    </Button>
-                </Row> */}
-            </Section>
-        </Html>
+        <Head>
+          <title>Verification Email</title>
+          <Font 
+            fontFamily="Inter"
+            fontWeight="400"
+            fontStyle="normal"
+            fallbackFontFamily={["Helvetica", "Arial", "sans-serif"]}
+          />
+        </Head>
+        <Preview>
+          Your account verification code is here!
+        </Preview>
+        <Section style={{ backgroundColor: "#f9fafb", padding: "20px", borderRadius: "8px", margin: "0 auto", maxWidth: "600px" }}>
+          <Row style={{ textAlign: "center", marginBottom: "20px" }}>
+            <Text style={{ fontSize: "24px", fontWeight: "bold", color: "#333" }}>
+              Account Verification
+            </Text>
+          </Row>
+          <Row style={{ textAlign: "center", marginBottom: "10px" }}>
+            <Text style={{ fontSize: "16px", color: "#555" }}>
+              Hello, <strong>{username}</strong>
+            </Text>
+          </Row>
+          <Row style={{ textAlign: "center", marginBottom: "20px" }}>
+            <Text
+              style={{
+                fontSize: "20px",
+                color: "#111",
+                backgroundColor: "#e5e7eb",
+                padding: "10px 20px",
+                borderRadius: "4px",
+                letterSpacing: "2px",
+                display: "inline-block",
+              }}
+            >
+              {otp}
+            </Text>
+          </Row>
+          <Row style={{ textAlign: "center", marginBottom: "20px" }}>
+            <Text style={{ fontSize: "16px", color: "#666" }}>
+              Thanks for registering. Please use the above code to verify your account.
+            </Text>
+          </Row>
+          <Row style={{ textAlign: "center" }}>
+            <Text style={{ fontSize: "14px", color: "#888" }}>
+              If you didn&apos;t sign up for this account, please ignore this email.
+            </Text>
+          </Row>
+        </Section>
+      </Html>
+      
     );
 }

@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/context/AuthProvider";
+import { Toaster } from "@/components/ui/sonner";
+
+// Import the separate client component:
+import DarkModeToggle from "@/app/DarkModeToggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,17 +24,31 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <AuthProvider>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+        <body
+          className={`
+            ${geistSans.variable} 
+            ${geistMono.variable} 
+            antialiased 
+            bg-gray-100 
+            dark:bg-gray-900 
+            text-gray-900 
+            dark:text-gray-100 
+            transition-colors 
+            duration-300
+          `}
+        >
+          {/* 🔥 Insert the client-side toggle button here */}
+          <DarkModeToggle />
+
+          {children}
+          <Toaster />
+        </body>
       </AuthProvider>
     </html>
   );

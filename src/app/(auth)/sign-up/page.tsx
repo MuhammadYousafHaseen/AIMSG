@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import Link from "next/link"
+import { useDebounceCallback } from 'usehooks-ts'
 import { useState, useEffect } from "react"
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation"
@@ -21,43 +22,70 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import {Loader2} from "lucide-react"
-import { signInSchema } from "@/schemas/signInSchema"
-import { signIn } from "next-auth/react"
 
 
 
 const Page = () => {
- 
+  const [username,setUsername] = useState('')
+  const [usernameMessage, setUsernameMessage] = useState('')
+  const [isCheckingUsername,setIsCheckingUsername] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
- 
+  const debounced = useDebounceCallback(setUsername,500)
   const { toast } = useToast()
 
   const router = useRouter();
 
   // zod implementation
-   const form = useForm<z.infer<typeof signInSchema>>({
-    resolver: zodResolver(signInSchema),
+   const form = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
     defaultValues:{
+      username:'',
       email:'',
       password:'',
     }
    })
 
-   const onSubmit = async (data:z.infer<typeof signInSchema>) => {
-     const result =  await signIn('credentials',{
-      redirect:false,
-      identifier: data.identifier,
-      password: data.password,
-     })
-     if(result?.error){
-      toast("Error!", {
-        description: result.error ?? "Incorrect email or password" ,
-      })} 
-
-      if(result?.url){
-        router.replace('/dashboard')
+   useEffect(()=>{
+     const checkUsernameUnique = async () => {
+      if(username){
+        setIsCheckingUsername(true)
+        setUsernameMessage('')
+        try {
+          const response = await axios.get(`/api/check-username-unique?username=${username}`)
+          const message = response.data.message
+          setUsernameMessage(message)
+        } catch (error) {
+          const axiosError = error as AxiosError<ApiResponse>;
+          setUsernameMessage(axiosError.response?.data.message ?? "Error checking username uniqueness");
+        } finally{
+          setIsCheckingUsername(false)
+        }
       }
+     }
+     checkUsernameUnique()
+   },[username])
+
+   const onSubmit = async (data:z.infer<typeof signUpSchema>) => {
+     setIsSubmitting(true)
+     console.log(data)
+     try {
+      const response = await axios.post<ApiResponse>('/api/sign-up',data)
+      
+    toast( "Success!", {
+       description: response.data.message ??"Your account created Successfully " ,
+     });
+      router.replace(`/verify/${username}`)
+      setIsSubmitting(false)
+     } catch (error) {
+      console.log("Error in signup of User", error)
+      const axiosError = error as AxiosError<ApiResponse>;
+     const errorMessage = axiosError.response?.data.message ?? "Error creating account";
+     toast("Error!", {
+      description: errorMessage ??"Error creating account " ,
+    });
+     setIsSubmitting(false)
+     }
    }
    return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900 px-4">
@@ -71,10 +99,36 @@ const Page = () => {
   
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-            
             <FormField
               control={form.control}
-              name="identifier"
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">Username</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Enter Username"
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        debounced(e.target.value);
+                      }}
+                      className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    />
+                  </FormControl>
+                  {isCheckingUsername && <Loader2 className="h-4 w-4 animate-spin text-blue-500" />}
+                  <p className={`text-sm mt-1 ${usernameMessage === "Username is available" ? "text-green-500" : "text-red-500"}`}>
+                    {usernameMessage}
+                  </p>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+  
+            <FormField
+              control={form.control}
+              name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-gray-700 dark:text-gray-300">Email</FormLabel>

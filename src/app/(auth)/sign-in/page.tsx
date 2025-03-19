@@ -4,12 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation"
-import { signUpSchema } from "@/schemas/signUpSchema"
-import axios, {AxiosError} from "axios"
-import { ApiResponse } from "@/types/ApiResponse"
+
 import {
   Form,
   FormControl,
@@ -39,12 +37,13 @@ const Page = () => {
    const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues:{
-      email:'',
+      identifier:'',
       password:'',
     }
    })
 
    const onSubmit = async (data:z.infer<typeof signInSchema>) => {
+     setIsSubmitting(true)
      const result =  await signIn('credentials',{
       redirect:false,
       identifier: data.identifier,
@@ -56,7 +55,11 @@ const Page = () => {
       })} 
 
       if(result?.url){
+        setIsSubmitting(false)
         router.replace('/dashboard')
+        toast("Success!", {
+          description: "Login successful" 
+        })
       }
    }
    return (
@@ -66,7 +69,7 @@ const Page = () => {
           <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl text-gray-900 dark:text-white mb-4">
             Join AI Message
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">Sign up to get started</p>
+          <p className="text-gray-600 dark:text-gray-400">Sign in to get started</p>
         </div>
   
         <Form {...form}>
@@ -77,11 +80,11 @@ const Page = () => {
               name="identifier"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-gray-700 dark:text-gray-300">Email</FormLabel>
+                  <FormLabel className="text-gray-700 dark:text-gray-300">Email/Username</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder="Enter Your Email"
+                      placeholder="Enter Your Email/Username"
                       {...field}
                       className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                     />
@@ -121,7 +124,7 @@ const Page = () => {
                   Please Wait
                 </>
               ) : (
-                "Sign Up"
+                "Sign In"
               )}
             </Button>
           </form>
@@ -129,9 +132,9 @@ const Page = () => {
   
         <div className="text-center">
           <p className="text-gray-600 dark:text-gray-400">
-            Already a member?{" "}
-            <Link href="/sign-in" className="text-blue-600 hover:underline dark:text-blue-400">
-              Sign In
+            Does not have an account?{" "}
+            <Link href="/sign-up" className="text-blue-600 hover:underline dark:text-blue-400">
+              Sign Up
             </Link>
           </p>
         </div>

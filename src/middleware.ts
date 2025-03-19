@@ -45,7 +45,7 @@ export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     // Define protected and public routes
-    const authRoutes = ['/sign-in', '/sign-up', '/verify'];
+    const authRoutes = ['/sign-in', '/verify'];
     const protectedRoutes = ['/dashboard'];
 
     // If user is authenticated and tries to access auth routes, redirect to dashboard

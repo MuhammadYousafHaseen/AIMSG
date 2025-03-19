@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import AuthProvider from "@/context/AuthProvider";
-import { Toaster } from "@/components/ui/sonner";
+
 import Navbar from "@/components/Navbar";
 
 // Import the separate client component:
@@ -30,8 +28,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <AuthProvider>
-        <body
+     
+      <body
           className={`
             ${geistSans.variable} 
             ${geistMono.variable} 
@@ -48,9 +46,9 @@ export default function RootLayout({
           
           <Navbar />
           {children}
-          <Toaster />
+         
         </body>
-      </AuthProvider>
+    
     </html>
   );
 }

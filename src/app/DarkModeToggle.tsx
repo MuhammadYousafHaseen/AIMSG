@@ -24,8 +24,8 @@ export default function DarkModeToggle() {
     type="button"
       onClick={toggleTheme}
       className="
-        fixed top-4 right-4 
-        md:top-6 md:right-6 
+        fixed top-14 right-4 
+        md:top-4 md:right-4 
         p-2 
         bg-gray-300 
         dark:bg-gray-700 

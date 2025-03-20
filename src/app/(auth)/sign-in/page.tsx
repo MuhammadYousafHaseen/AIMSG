@@ -83,7 +83,7 @@ const Page = () => {
                   <FormLabel className="text-gray-700 dark:text-gray-300">Email/Username</FormLabel>
                   <FormControl>
                     <Input
-                      type="email"
+                      type="text"
                       placeholder="Enter Your Email/Username"
                       {...field}
                       className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"

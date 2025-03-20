@@ -38,7 +38,7 @@ function Navbar() {
               <Link href="/user/profile" className="hover:text-blue-500 transition">Profile</Link>
               <Button 
                 onClick={() => signOut()} 
-                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
+                className="px-4 py-2 w-20 h-6 text-center bg-red-500 text-white rounded-md hover:bg-red-600 transition"
               >
                 Sign Out
               </Button>
@@ -89,7 +89,7 @@ function Navbar() {
                   <Link href="/user/profile" className="hover:text-blue-500 transition">Profile</Link>
                   <Button 
                     onClick={() => signOut()} 
-                    className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
+                    className="px-4 py-2  bg-red-500 text-white rounded-md hover:bg-red-600 transition"
                   >
                     Sign Out
                   </Button>

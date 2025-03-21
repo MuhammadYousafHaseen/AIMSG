@@ -1,23 +1,22 @@
- [
-    {
-      "title": "Message from User 123",
-      "content": "Hey, how's it going?",
-      "received_at": "1 hour ago"
-    },
-    {
-      "title": "Message from Admin",
-      "content": "Your account has been updated successfully.",
-      "received_at": "2 days ago"
-    },
-    {
-      "title": "Message from User 456",
-      "content": "Can we reschedule our meeting?",
-      "received_at": "3 hours ago"
-    },
-    {
-      "title": "Message from Support",
-      "content": "We have resolved your issue. Let us know if you need further assistance.",
-      "received_at": "5 minutes ago"
-    }
-  ]
-  
+[
+  {
+    "title": "Message from User 123",
+    "content": "Hey! Hope you're having a great day. Just wanted to check in!",
+    "received_at": "1 hour ago"
+  },
+  {
+    "title": "Message from Admin",
+    "content": "Your recent settings update was successful. Let us know if you need any help!",
+    "received_at": "2 days ago"
+  },
+  {
+    "title": "Message from User 456",
+    "content": "Hey, I need to reschedule our meeting. Let me know when you're available!",
+    "received_at": "3 hours ago"
+  },
+  {
+    "title": "Message from Support",
+    "content": "We've resolved your issue. Please verify and let us know if everything is working fine!",
+    "received_at": "5 minutes ago"
+  }
+]

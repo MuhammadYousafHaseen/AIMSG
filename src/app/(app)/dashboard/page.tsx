@@ -259,6 +259,7 @@ function Dashboard() {
     setIsLoading(true);
     try {
       const { data } = await axios.get<ApiResponse>('/api/get-messages');
+      console.log(data)
       setMessages(data.messages || []);
       if (refresh) {
         toast( 'Success!',
@@ -284,7 +285,7 @@ function Dashboard() {
   const handleSwitchChange = async () => {
     setIsSwitchLoading(true);
     try {
-      const { data } = await axios.post<ApiResponse>('/api/accept-message', {
+      const { data } = await axios.post<ApiResponse>('/api/toggle-accept-message', {
         acceptMessages: !acceptMessages,
       });
       setValue('acceptMessages', !acceptMessages);

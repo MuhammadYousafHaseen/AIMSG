@@ -44,11 +44,10 @@ function MessageCard({message, onMessageDelete}:MessageCardProps) {
     return (
     <Card>
     <CardHeader>
-      <CardTitle>Card Title</CardTitle>
-      <CardDescription>Card Description</CardDescription>
+    
     </CardHeader>
     <CardContent>
-      <p>Card Content</p>
+      <p>{message.content}</p>
     </CardContent>
     <CardFooter>
     <AlertDialog>

@@ -45,13 +45,13 @@ export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     // Define protected and public routes
-    const authRoutes = ['/sign-in', '/verify'];
-    const protectedRoutes = ['/dashboard'];
+    const authRoutes = ['/sign-in', '/verify', "/"];
+    const protectedRoutes = ['/dashboard','/u/:username'];
 
     // If user is authenticated and tries to access auth routes, redirect to dashboard
-    if (token && authRoutes.includes(pathname)) {
-        return NextResponse.redirect(new URL('/dashboard', request.url));
-    }
+    // if (token && authRoutes.includes(pathname)) {
+    //     return NextResponse.redirect(new URL('/dashboard', request.url));
+    // }
 
     // If user is NOT authenticated and tries to access protected routes, redirect to sign-in
     if (!token && protectedRoutes.includes(pathname)) {
@@ -64,5 +64,5 @@ export async function middleware(request: NextRequest) {
 
 // Middleware will only run on specified routes
 export const config = {
-    matcher: ['/sign-in', '/sign-up', '/', '/dashboard/:path*', '/verify/:path*'],
+    matcher: ['/sign-in', '/sign-up', '/', '/dashboard/:path*', '/verify/:path*','/u/:username'],
 };

@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^1.2.5",
+    "@ai-sdk/openai": "^1.2.7",
+    "@ai-sdk/react": "^1.1.25",
     "@hookform/resolvers": "^4.1.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",
     "@radix-ui/react-label": "^2.1.2",
@@ -19,7 +20,7 @@
     "@react-email/components": "^0.0.33",
     "@react-email/html": "^0.0.11",
     "@react-email/render": "^1.0.5",
-    "ai": "^4.1.61",
+    "ai": "^4.1.66",
     "axios": "^1.8.3",
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
